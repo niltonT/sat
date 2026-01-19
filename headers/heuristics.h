@@ -38,8 +38,6 @@ inline void force(FNC formula)
     while (value != TruthValue::TRUE && index < combinations.size())
     {
         assignment.assign(combinations[index]);
-        cout << endl;
-        assignment.print();
         value = evaluateFormula(formula, assignment);
         index++;
     }

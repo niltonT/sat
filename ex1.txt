@@ -1,0 +1,9 @@
+c (x1 v ¬x2) ^ (x2 v x3)
+c solução:
+c x1 FALSE
+c x2 FALSE
+c x3 TRUE
+
+p cnf 3 2
+1 -2 0
+2 3 0
