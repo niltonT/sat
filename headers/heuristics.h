@@ -174,7 +174,6 @@ inline void dpllSolution(FNC &formula)
     Assignment result = dpll(formula, assignment);
     if (result.getNumVariables() != 0)
     {
-        cout << result.getNumVariables() << endl;
         result.print();
     }
     else

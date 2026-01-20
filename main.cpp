@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
 #include "./headers/FNC.h"
 #include "./headers/heuristics.h"
 #include "./headers/DimacsParser.h"
@@ -18,9 +19,17 @@ int main(int argc, char* argv[])
         FNC formula = DimacsParser::parse(argv[1]);
         formula.printFNC();
         cout << "Solução por força bruta:" << endl;
+        auto start = chrono::high_resolution_clock::now();
         forceSolution(formula);
+        auto end = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        cout << "Tempo de execução: " << duration.count() << " microssegundos" << endl;
         cout << "Solução por DPLL:" << endl;
+        start = chrono::high_resolution_clock::now();
         dpllSolution(formula);
+        end = chrono::high_resolution_clock::now();
+        duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        cout << "Tempo de execução: " << duration.count() << " microssegundos" << endl;
     }
     catch(const std::exception& e)
     {
