@@ -23,5 +23,7 @@ Como o trabalho lida com formulas em forma normal conjuntiva, foi implementado u
 
 # Como compilar e rodar
 
+Ao executar o projeto, é preciso informar um aquivo de entrada, no padrão DIMACS, que representa a formula de entrada. É preciso informar também o número de testes.
+
 - g++ -o exec *.cpp
-- ./exec
+- ./exec <endereço de um arquivo em DIMACS> <número de testes>
