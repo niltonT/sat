@@ -51,7 +51,7 @@ inline void forceSolution(FNC &formula)
     }
     else
     {
-        cout << "Unsatisfiable!" << endl;
+        cout << "Sem solução!" << endl;
     }
 
     return;
@@ -178,7 +178,7 @@ inline void dpllSolution(FNC &formula)
     }
     else
     {
-        cout << "Unsatisfiable!" << endl;
+        cout << "Sem solução!" << endl;
     }
 }
 
