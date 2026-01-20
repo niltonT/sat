@@ -1,5 +1,5 @@
-# sat
-O trabalho consiste em implementar uma solução do SAT, famoso problema NP-Completo. A ideia desse trabalho também é comparar a minha implementação com a implementação de uma LLM.
+# SAT
+O trabalho consiste em implementar uma solução do SAT, famoso problema NP-Completo. A ideia desse trabalho também é comparar a minha implementação com a implementação de uma LLM. Foram implemantadas duas soluções para o SAT, por força bruta e por DPLL.
 
 # Arquivos DIMACS
 
@@ -18,8 +18,8 @@ Como o trabalho lida com formulas em forma normal conjuntiva, foi implementado u
 - Número negativo -i → negação 
 - Cada cláusula termina com 0
 
-1 -2 0   -> (x1 v ~x2)
-2  3 0   -> (x2 v x3)
+- 1 -2 0   -> (x1 v ~x2)
+- 2  3 0   -> (x2 v x3)
 
 # Como compilar e rodar
 
