@@ -21,3 +21,7 @@ Como o trabalho lida com formulas em forma normal conjuntiva, foi implementado u
 1 -2 0   -> (x1 v ~x2)
 2  3 0   -> (x2 v x3)
 
+# Como compilar e rodar
+
+- g++ -o exec *.cpp
+- ./exec

@@ -28,11 +28,10 @@ inline vector<vector<bool>> generateAllCombinations(int numVariables)
 
 // tenta a solução por força bruta.
 // avalia todas as combinações possíveis.
-inline void forceSolution(FNC &formula)
+inline bool forceSolution(FNC &formula, Assignment &assignment)
 {
 
     int numVariables = formula.getNumVariables();
-    Assignment assignment(numVariables);
 
     vector<vector<bool>> combinations = generateAllCombinations(numVariables);
     TruthValue value = TruthValue::UNASSIGNED;
@@ -47,14 +46,10 @@ inline void forceSolution(FNC &formula)
 
     if (value == TruthValue::TRUE)
     {
-        assignment.print();
-    }
-    else
-    {
-        cout << "Sem solução!" << endl;
+        return true;
     }
 
-    return;
+    return false;
 }
 
 // avalia todas as cláusulas unitárias.
@@ -168,18 +163,16 @@ inline Assignment dpll(
     return result;
 }
 
-inline void dpllSolution(FNC &formula)
+inline bool dpllSolution(FNC &formula, Assignment &assignment)
 {
-    Assignment assignment(formula.getNumVariables());
     Assignment result = dpll(formula, assignment);
     if (result.getNumVariables() != 0)
     {
-        result.print();
+        assignment = result;
+        return true;
     }
-    else
-    {
-        cout << "Sem solução!" << endl;
-    }
+
+    return false;
 }
 
 #endif
