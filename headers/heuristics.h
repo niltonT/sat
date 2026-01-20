@@ -26,7 +26,9 @@ inline vector<vector<bool>> generateAllCombinations(int numVariables)
     return combinations;
 }
 
-inline void force(FNC formula)
+// tenta a solução por força bruta.
+// avalia todas as combinações possíveis.
+inline void forceSolution(FNC &formula)
 {
 
     int numVariables = formula.getNumVariables();
@@ -45,7 +47,6 @@ inline void force(FNC formula)
 
     if (value == TruthValue::TRUE)
     {
-        cout << "Solution: \n";
         assignment.print();
     }
     else
@@ -56,13 +57,9 @@ inline void force(FNC formula)
     return;
 }
 
-struct Decision
-{
-    int var;
-    bool value;
-};
-
-bool evaluateUnitary(FNC &formula, Assignment &assignment, vector<Decision> &decisions)
+// avalia todas as cláusulas unitárias.
+// caso encontre contradição, retorna false.
+bool evaluateUnitary(FNC &formula, Assignment &assignment)
 {
 
     bool changed;
@@ -92,8 +89,6 @@ bool evaluateUnitary(FNC &formula, Assignment &assignment, vector<Decision> &dec
                 }
             }
 
-            cout << "Debug: Clause processed, isTrue=" << isTrue << ", unassingedCount=" << unassingedCount << endl;
-
             if (isTrue)
             {
                 continue;
@@ -107,33 +102,85 @@ bool evaluateUnitary(FNC &formula, Assignment &assignment, vector<Decision> &dec
             if (unassingedCount == 1)
             {
                 assignment.assign(literal->getVar(), !literal->isNegated());
-                decisions.push_back(Decision{literal->getVar(), !literal->isNegated()});
                 changed = true;
             }
-            assignment.print();
         }
     } while (changed);
 
     return true;
 }
 
-inline bool dpll(
-    FNC formula,
-    Assignment assignment,
-    vector<Decision> decisions = vector<Decision>())
+// retorna a primeira variável sem atribuição.
+int getUnassignnedVar(const Assignment &assignment)
+{
+    int numVariables = assignment.getNumVariables();
+    for (int i = 1; i <= numVariables; i++)
+    {
+        if (assignment.get(i) == TruthValue::UNASSIGNED)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+// Método DPLL recursivo.
+inline Assignment dpll(
+    FNC &formula,
+    Assignment &assignment
+)
 {
 
-    if(!evaluateUnitary(formula, assignment, decisions))
+    // Caso base 1 - não tem solução
+    if(!evaluateUnitary(formula, assignment))
     {
-        return false;
+        return Assignment(0);
     }
 
+    // Caso base 2 - tem solução
     if (evaluateFormula(formula, assignment) == TruthValue::TRUE)
     {
-        return true;
+        return assignment;
     }
 
-    
+    // Seleciona uma variável sem atribuição
+    int var = getUnassignnedVar(assignment);
+    if (var == -1)
+    {
+        return Assignment(0);
+    }
+
+    //tenta var = true
+    Assignment assignmentTrue = assignment;
+    assignmentTrue.assign(var, true);
+    Assignment result = dpll(formula, assignmentTrue);
+
+    if (result.getNumVariables() != 0)
+    {
+        return result;
+    }
+
+    //tenta var = false
+    Assignment assignmentFalse = assignment;
+    assignmentFalse.assign(var, false);
+    result = dpll(formula, assignmentFalse);
+
+    return result;
+}
+
+inline void dpllSolution(FNC &formula)
+{
+    Assignment assignment(formula.getNumVariables());
+    Assignment result = dpll(formula, assignment);
+    if (result.getNumVariables() != 0)
+    {
+        cout << result.getNumVariables() << endl;
+        result.print();
+    }
+    else
+    {
+        cout << "Unsatisfiable!" << endl;
+    }
 }
 
 #endif

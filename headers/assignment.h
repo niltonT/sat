@@ -60,6 +60,11 @@ public:
             std::cout << "x" << i << ": " << to_string(values[i]) << std::endl;
         }
     }
+
+    int getNumVariables() const
+    {
+        return values.size() - 1;
+    }
 };
 
 inline TruthValue evaluateLiteral(const Literal &lit, const Assignment &a)

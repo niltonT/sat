@@ -17,7 +17,10 @@ int main(int argc, char* argv[])
     {
         FNC formula = DimacsParser::parse(argv[1]);
         formula.printFNC();
-        force(formula);
+        cout << "Solução por força bruta:" << endl;
+        forceSolution(formula);
+        cout << "Solução por DPLL:" << endl;
+        dpllSolution(formula);
     }
     catch(const std::exception& e)
     {
